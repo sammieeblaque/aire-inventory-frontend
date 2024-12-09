@@ -3,7 +3,9 @@ import axios from "axios";
 import { ProductItem, SalesItem } from "../@types";
 
 const API_URL =
-  import.meta.env.VITE_BASE_API_URL || "http://localhost:3000/api";
+  process.env.NODE_ENV === "production"
+    ? import.meta.env.VITE_BASE_API_URL
+    : "http://localhost:3000/api";
 
 export const inventoryApi = {
   addProduct: (productData: ProductItem) =>

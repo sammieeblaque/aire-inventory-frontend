@@ -46,11 +46,13 @@ const SellProductModal: React.FC<SellProductModalProps> = ({
             quantity: "",
           });
           queryClient.invalidateQueries({
-            queryKey: [
-              "inventory-report",
-              "daily-profit",
-              "total-inventory-value",
-            ],
+            queryKey: ["inventory-report"],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ["daily-profit"],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ["total-inventory-value"],
           });
         },
         onError: (error) => {
@@ -63,9 +65,9 @@ const SellProductModal: React.FC<SellProductModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg shadow-xl w-96">
-        <h2 className="text-xl font-bold mb-4 flex items-center">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="p-6 bg-white rounded-lg shadow-xl w-96">
+        <h2 className="flex items-center mb-4 text-xl font-bold">
           <ShoppingCart className="mr-2" /> Sell Product
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -101,7 +103,7 @@ const SellProductModal: React.FC<SellProductModalProps> = ({
           <div className="flex justify-between">
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
               disabled={sellProductMutation.isPending}
             >
               {sellProductMutation.isPending ? "Selling..." : "Sell Product"}
@@ -109,7 +111,7 @@ const SellProductModal: React.FC<SellProductModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              className="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600"
             >
               Cancel
             </button>
