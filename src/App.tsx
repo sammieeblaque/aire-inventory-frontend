@@ -33,15 +33,15 @@ export default function App() {
     });
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen p-6 bg-gray-100">
       <div className="">
-        <h1 className="text-3xl font-bold mb-6 text-center">
+        <h1 className="mb-6 text-3xl font-bold text-center">
           Aire Inventory Management System
         </h1>
 
         {/* Quick Stats */}
-        <div className="grid md:grid-cols-3 gap-4 mb-6">
-          <div className="bg-white p-4 rounded-lg shadow flex items-center">
+        <div className="grid gap-4 mb-6 md:grid-cols-3">
+          <div className="flex items-center p-4 bg-white rounded-lg shadow">
             <Warehouse className="mr-4 text-blue-500" />
             <div>
               <h3 className="text-gray-500">Total Inventory Value</h3>
@@ -52,7 +52,7 @@ export default function App() {
               </p>
             </div>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow flex items-center">
+          <div className="flex items-center p-4 bg-white rounded-lg shadow">
             <TrendingUp className="mr-4 text-green-500" />
             <div>
               <h3 className="text-gray-500">Daily Profit</h3>
@@ -63,29 +63,29 @@ export default function App() {
               </p>
             </div>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow flex items-center">
+          <div className="flex items-center p-4 bg-white rounded-lg shadow">
             <Package className="mr-4 text-purple-500" />
             <div>
               <h3 className="text-gray-500">Total Products</h3>
               <p className="text-xl font-bold">
                 {isInventoryLoading
                   ? "Loading..."
-                  : inventoryReport?.data.length || 0}
+                  : inventoryReport?.data?.data.length || 0}
               </p>
             </div>
           </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex justify-end space-x-4 mb-6">
+        <div className="flex justify-end mb-6 space-x-4">
           <button
             onClick={() => setIsAddProductModalOpen(true)}
-            className="bg-green-500 text-white px-4 py-2 rounded flex items-center hover:bg-green-600"
+            className="flex items-center px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600"
           >
             <PlusCircle className="mr-2" /> Add Product
           </button>
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded flex items-center hover:bg-blue-600"
+            className="flex items-center px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
             onClick={() => setIsSellModalOpen(true)}
           >
             <ShoppingCart className="mr-2" /> Sell Product
@@ -93,7 +93,7 @@ export default function App() {
         </div>
 
         {/* Inventory Table */}
-        <div className="bg-white shadow rounded-lg">
+        <div className="bg-white rounded-lg shadow">
           <table className="w-full">
             <thead className="bg-gray-100">
               <tr>
@@ -107,12 +107,12 @@ export default function App() {
             <tbody>
               {isInventoryLoading ? (
                 <tr>
-                  <td colSpan={5} className="text-center p-4">
+                  <td colSpan={5} className="p-4 text-center">
                     Loading inventory...
                   </td>
                 </tr>
               ) : (
-                inventoryReport?.data.map((product: ProductItem) => (
+                inventoryReport?.data?.data?.map((product: ProductItem) => (
                   <tr key={product.id} className="border-t">
                     <td className="p-3">{product.name}</td>
                     <td className="p-3 text-right">{product.quantity}</td>
@@ -139,7 +139,7 @@ export default function App() {
         <SellProductModal
           isOpen={sellisModalOpen} // TODO: Implement sell product modal state
           onClose={() => setIsSellModalOpen(false)} // TODO: Implement close handler
-          products={inventoryReport?.data || []}
+          products={inventoryReport?.data?.data || []}
         />
 
         {/* Add Product Modal */}
