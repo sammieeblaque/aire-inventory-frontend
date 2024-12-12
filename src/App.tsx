@@ -16,6 +16,8 @@ export default function App() {
   const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
   const [sellisModalOpen, setIsSellModalOpen] = useState(false);
 
+  const [Search, setSearch] = useState("");
+
   const { data: inventoryReport, isLoading: isInventoryLoading } = useQuery({
     queryKey: ["inventory-report"],
     queryFn: () => inventoryApi.getInventoryReport(),
@@ -90,6 +92,16 @@ export default function App() {
           >
             <ShoppingCart className="mr-2" /> Sell Product
           </button>
+        </div>
+
+        <div>
+          <input
+            type="text"
+            value={Search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search by product name"
+            className="w-1/3 p-3 border border-gray-300 rounded-lg"
+          />
         </div>
 
         {/* Inventory Table */}

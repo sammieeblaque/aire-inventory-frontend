@@ -5,7 +5,7 @@ import { ProductItem, SalesItem } from "../@types";
 const API_URL =
   process.env.NODE_ENV === "production"
     ? import.meta.env.VITE_BASE_API_URL
-    : "http://localhost:3000/api";
+    : import.meta.env.VITE_BASE_API_URL_LOCAL;
 
 export const inventoryApi = {
   addProduct: (productData: ProductItem) =>

@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { inventoryApi } from "../lib/api";
+import { Undo } from "lucide-react";
 
 export default function SalesHistoryPage() {
   const { data: salesHistory, isLoading } = useQuery({
@@ -8,11 +9,15 @@ export default function SalesHistoryPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen p-6 bg-gray-100">
       <div className="container mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Sales History</h1>
+        <Undo
+          onClick={() => window.history.back()}
+          className="mb-6 cursor-pointer"
+        />
+        <h1 className="mb-6 text-3xl font-bold">Sales History</h1>
 
-        <div className="bg-white shadow rounded-lg">
+        <div className="bg-white rounded-lg shadow">
           <table className="w-full">
             <thead className="bg-gray-100">
               <tr>
@@ -26,7 +31,7 @@ export default function SalesHistoryPage() {
             <tbody>
               {isLoading ? (
                 <tr>
-                  <td colSpan={5} className="text-center p-4">
+                  <td colSpan={5} className="p-4 text-center">
                     Loading sales history...
                   </td>
                 </tr>
@@ -37,10 +42,10 @@ export default function SalesHistoryPage() {
                     <td className="p-3">{sale.productName}</td>
                     <td className="p-3 text-right">{sale.quantity}</td>
                     <td className="p-3 text-right">
-                      ${sale.totalSaleValue.toFixed(2)}
+                      N{Number(sale.totalSaleValue).toFixed(2)}
                     </td>
                     <td className="p-3 text-right">
-                      ${sale.profit.toFixed(2)}
+                      N{Number(sale.profit).toFixed(2)}
                     </td>
                     <td className="p-3 text-right">
                       {new Date(sale.date).toLocaleDateString()}
