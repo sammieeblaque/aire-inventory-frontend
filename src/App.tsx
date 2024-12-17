@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useDeferredValue, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   Package,
@@ -7,7 +7,7 @@ import {
   Warehouse,
   PlusCircle,
 } from "lucide-react";
-import { inventoryApi } from "./lib/api";
+import { inventoryApi, useGetInventoryReportQuery } from "./lib/api";
 import SellProductModal from "./components/SellProductModal";
 import { AddProductModal } from "./components/AddProductModal";
 import { ProductItem } from "./@types";
@@ -16,12 +16,13 @@ export default function App() {
   const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
   const [sellisModalOpen, setIsSellModalOpen] = useState(false);
 
-  const [Search, setSearch] = useState("");
+  const [search, setSearch] = useState("");
 
-  const { data: inventoryReport, isLoading: isInventoryLoading } = useQuery({
-    queryKey: ["inventory-report"],
-    queryFn: () => inventoryApi.getInventoryReport(),
-  });
+  const deferredSearch = useDeferredValue(search);
+  const params = { search: deferredSearch };
+
+  const { data: inventoryReport, isLoading: isInventoryLoading } =
+    useGetInventoryReportQuery(params);
 
   const { data: dailyProfitData, isLoading: isDailyProfitLoading } = useQuery({
     queryKey: ["daily-profit"],
@@ -97,7 +98,7 @@ export default function App() {
         <div>
           <input
             type="text"
-            value={Search}
+            value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by product name"
             className="w-1/3 p-3 border border-gray-300 rounded-lg"

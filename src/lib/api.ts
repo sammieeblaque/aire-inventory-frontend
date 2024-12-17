@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { ProductItem, SalesItem } from "../@types";
 
@@ -14,7 +14,8 @@ export const inventoryApi = {
   sellProduct: (saleData: SalesItem) =>
     axios.post(`${API_URL}/inventory/sell`, saleData),
 
-  getInventoryReport: () => axios.get(`${API_URL}/inventory/report`),
+  getInventoryReport: (search: string) =>
+    axios.get(`${API_URL}/inventory/report?search=${search}`),
 
   getDailyProfit: (date?: string) =>
     axios.get(`${API_URL}/inventory/daily-profit`, { params: { date } }),
@@ -51,5 +52,12 @@ const sellProduct = async (saleData: SalesItem) => {
 export const useSellProductMutation = () => {
   return useMutation({
     mutationFn: sellProduct,
+  });
+};
+
+export const useGetInventoryReportQuery = ({ search }: { search: string }) => {
+  return useQuery({
+    queryKey: ["inventory-report", search],
+    queryFn: () => inventoryApi.getInventoryReport(search),
   });
 };
