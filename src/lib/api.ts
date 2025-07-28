@@ -15,7 +15,9 @@ export const inventoryApi = {
     axios.post(`${API_URL}/inventory/sell`, saleData),
 
   getInventoryReport: (search: string) =>
-    axios.get(`${API_URL}/inventory/report?search=${search}`),
+    axios.get(
+      `${API_URL}/inventory/report?${search && new URLSearchParams({ search })}`
+    ),
 
   getDailyProfit: (date?: string) =>
     axios.get(`${API_URL}/inventory/daily-profit`, { params: { date } }),
