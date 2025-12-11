@@ -36,7 +36,7 @@ export default function App() {
     });
 
   return (
-    <div className="min-h-screen p-6 bg-gray-100">
+    <div className="min-h-screen p-6 bg-gray-200">
       <div className="">
         <h1 className="mb-6 text-3xl font-bold text-center">
           Aire Inventory Management System
@@ -120,13 +120,19 @@ export default function App() {
             <tbody>
               {isInventoryLoading ? (
                 <tr>
-                  <td colSpan={5} className="p-4 text-center">
+                  <td
+                    colSpan={5}
+                    className="p-4 text-center"
+                  >
                     Loading inventory...
                   </td>
                 </tr>
               ) : (
                 inventoryReport?.data?.data?.map((product: ProductItem) => (
-                  <tr key={product.id} className="border-t">
+                  <tr
+                    key={product.id}
+                    className="border-t"
+                  >
                     <td className="p-3">{product.name}</td>
                     <td className="p-3 text-right">{product.quantity}</td>
                     <td className="p-3 text-right">
